@@ -9,7 +9,7 @@ import numpy as np
 import torch
 
 from .agent import DQNAgent
-from .config import TrainingConfig
+from .config import MarketMakerConfig, TrainingConfig
 from .environment import MarketMakerEnvironment
 from .evaluation import evaluate_policy
 from .visualization import plot_evaluation_dashboard, plot_training_curves, plot_training_stability
@@ -19,6 +19,8 @@ from .visualization import plot_evaluation_dashboard, plot_training_curves, plot
 class TrainingResult:
     history: dict[str, list[float]]
     evaluation: list[dict]
+    agent: DQNAgent
+    market_config: MarketMakerConfig
 
 
 def train_agent(config: TrainingConfig | None = None) -> TrainingResult:
@@ -101,4 +103,4 @@ def train_agent(config: TrainingConfig | None = None) -> TrainingResult:
         plot_training_stability(history, output_dir / "training_stability.png")
         plot_evaluation_dashboard(trajectory, history=history, output_path=output_dir / "episode_dashboard.png")
 
-    return TrainingResult(history=history, evaluation=evaluation)
+    return TrainingResult(history=history, evaluation=evaluation, agent=agent, market_config=config.market)

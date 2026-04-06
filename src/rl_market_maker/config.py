@@ -43,6 +43,17 @@ class DQNConfig:
 
 
 @dataclass(slots=True)
+class AvellanedaStoikovConfig:
+    gamma: float = 0.05
+    k: float = 50.0
+    volatility_window: int = 32
+    inventory_limit: float = 20.0
+    min_quote_bps: float = 1.0
+    max_quote_bps: float = 40.0
+    quote_clip_to_market: bool = True
+
+
+@dataclass(slots=True)
 class PPOConfig:
     learning_rate: float = 3e-4
     gamma: float = 0.995
@@ -68,3 +79,4 @@ class TrainingConfig:
     save_plots: bool = True
     market: MarketMakerConfig = field(default_factory=MarketMakerConfig)
     dqn: DQNConfig = field(default_factory=DQNConfig)
+
