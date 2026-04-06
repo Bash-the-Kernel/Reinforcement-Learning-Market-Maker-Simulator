@@ -12,7 +12,7 @@ from .agent import DQNAgent
 from .config import TrainingConfig
 from .environment import MarketMakerEnvironment
 from .evaluation import evaluate_policy
-from .visualization import plot_evaluation_dashboard, plot_training_curves
+from .visualization import plot_evaluation_dashboard, plot_training_curves, plot_training_stability
 
 
 @dataclass(slots=True)
@@ -98,6 +98,7 @@ def train_agent(config: TrainingConfig | None = None) -> TrainingResult:
 
     if config.save_plots:
         plot_training_curves(history, output_dir / "training_rewards.png")
+        plot_training_stability(history, output_dir / "training_stability.png")
         plot_evaluation_dashboard(trajectory, history=history, output_path=output_dir / "episode_dashboard.png")
 
     return TrainingResult(history=history, evaluation=evaluation)
