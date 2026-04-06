@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 from pprint import pprint
 
-from .config import MarketMakerConfig, PPOConfig, TrainingConfig
+from .config import DQNConfig, MarketMakerConfig, TrainingConfig
 from .training import train_agent
 
 
@@ -39,7 +39,7 @@ def main(argv: list[str] | None = None) -> None:
         device=args.device,
         save_plots=save_plots,
         market=MarketMakerConfig(seed=args.seed),
-        ppo=PPOConfig(),
+        dqn=DQNConfig(),
     )
     result = train_agent(config)
     pprint({"final_metrics": result.evaluation[-1] if result.evaluation else {}, "training_episodes": len(result.history["episode"])})

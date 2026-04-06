@@ -4,8 +4,9 @@ Research-grade reinforcement learning market making simulator with:
 
 - GBM mid-price dynamics
 - simplified limit order book and Poisson market order arrivals
-- continuous bid/ask quote control
-- PPO training in PyTorch
+- discrete bid/ask quote control over a configurable offset grid
+- Gym-style environment API with `reset()`, `step(action)`, `action_space`, and `observation_space`
+- DQN training in PyTorch with experience replay, a target network, and epsilon-greedy exploration
 - evaluation metrics and visualization plots
 
 ## Project Layout
@@ -25,3 +26,5 @@ python -m rl_market_maker --episodes 250 --evaluation-episodes 5 --save-plots
 ```
 
 Outputs are written to `artifacts/` by default, including a training reward curve and an episode dashboard.
+
+The environment observation is a 4D vector containing current mid price, agent inventory, spread, and short-term price momentum.

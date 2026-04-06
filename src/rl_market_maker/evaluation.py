@@ -6,7 +6,7 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from .agent import PPOAgent
+from .agent import DQNAgent
 from .environment import MarketMakerEnvironment
 
 
@@ -22,7 +22,7 @@ class EpisodeTrajectory:
     spread_capture: list[float]
 
 
-def evaluate_policy(agent: PPOAgent, env: MarketMakerEnvironment, episodes: int = 5) -> tuple[list[dict], EpisodeTrajectory]:
+def evaluate_policy(agent: DQNAgent, env: MarketMakerEnvironment, episodes: int = 5) -> tuple[list[dict], EpisodeTrajectory]:
     summaries: list[dict] = []
     trajectory = EpisodeTrajectory([], [], [], [], [], [], [], [])
 
@@ -34,8 +34,8 @@ def evaluate_policy(agent: PPOAgent, env: MarketMakerEnvironment, episodes: int 
         last_info: dict | None = None
 
         while not done:
-            action, _, _ = agent.select_action(observation, deterministic=True)
-            observation, reward, terminated, truncated, info = env.step(action)
+            action_index, action, _ = agent.select_action(observation, deterministic=True)
+            observation, reward, terminated, truncated, info = env.step(action_index)
             done = terminated or truncated
             episode_reward += reward
             last_info = info

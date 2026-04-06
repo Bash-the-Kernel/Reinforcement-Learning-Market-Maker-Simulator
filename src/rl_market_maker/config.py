@@ -22,7 +22,24 @@ class MarketMakerConfig:
     inventory_penalty: float = 0.0015
     transaction_cost_bps: float = 0.35
     max_fill_per_step: int = 3
+    quote_offset_levels: tuple[float, ...] = (1.0, 4.0, 8.0, 12.0, 20.0, 30.0)
     seed: int | None = None
+
+
+@dataclass(slots=True)
+class DQNConfig:
+    learning_rate: float = 1e-3
+    gamma: float = 0.99
+    batch_size: int = 64
+    replay_capacity: int = 50_000
+    target_update_interval: int = 500
+    update_interval: int = 1
+    hidden_size: int = 128
+    epsilon_start: float = 1.0
+    epsilon_end: float = 0.05
+    epsilon_decay_steps: int = 15_000
+    warmup_steps: int = 1_000
+    gradient_clip_norm: float = 1.0
 
 
 @dataclass(slots=True)
@@ -50,4 +67,4 @@ class TrainingConfig:
     device: str = "cpu"
     save_plots: bool = True
     market: MarketMakerConfig = field(default_factory=MarketMakerConfig)
-    ppo: PPOConfig = field(default_factory=PPOConfig)
+    dqn: DQNConfig = field(default_factory=DQNConfig)
